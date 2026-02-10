@@ -1,4 +1,4 @@
-# Bank Customer Churn Prediction
+# Retention Modeling & Operations
 
 **Case Study: Predictive Modeling**
 
