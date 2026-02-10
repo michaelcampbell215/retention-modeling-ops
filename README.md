@@ -1,32 +1,87 @@
-# Bank Customer Churn: Predictive Analysis
+# Bank Customer Churn Prediction
 
-For a detailed, narrative walkthrough of this project, please see the [full case study here](./CASE_STUDY.md).
+**Case Study: Predictive Modeling**
 
-This project analyzes a dataset of 10,000 bank customers to predict churn. The goal was to move beyond reactive retention efforts and build a model that could proactively identify customers at risk of leaving, enabling the bank to implement targeted retention strategies.
+> **Executive Summary:**  
+> To address a 20% historical revenue leak, we engineered a machine learning pipeline to identify at-risk customers before they leave. By leveraging a Gradient Boosting classifier and addressing extreme class imbalance with SMOTE, the final model achieved a **74% Recall rate**, enabling the bank to proactively intervene with high-value retention offers.
 
-## Key Findings
+---
 
-* The final optimized Gradient Boosting model can successfully identify 74% of all potential churners (Recall of 0.74).
-* The primary drivers of churn were identified as Age, Number of Products, and a customer's Activity Level.
-* Feature engineering was crucial, revealing that the account balance of German customers is a uniquely powerful predictor of churn.
+| **Detection Rate**                     | **Model Champion**                       | **Primary Signal**               | **Geographic Leakage**              |
+| :------------------------------------- | :--------------------------------------- | :------------------------------- | :---------------------------------- |
+| **74% Recall**<br>Churn Identification | **Gradient Boost**<br>Optimized w/ SMOTE | **Age & Depth**<br>Product Count | **Germany**<br>Balance-Driven Churn |
 
-![Feature Importance Chart](images/feature_importance_chart.png)
-## Recommendations
+---
 
-Based on the analysis, several key strategies were recommended:
-1.  Launch an Ecosystem Deepening Campaign: Target customers with few products with offers for new services (like a credit card) to increase integration.
-2.  Implement an Automated Activity Nudge: Proactively engage inactive customers with small incentives.
-3.  Create a Specialized German Retention Desk: Address the unique financial concerns of at-risk German customers.
+## The Analytical Workflow
 
-## How to Use This Repository
+### 1. Data Preparation & Cleaning
 
-1.  Clone the repository: `git clone https://github.com/x59215/Bank-Churn-Predictive-Analysis.git`
-2.  Install the required packages: `pip install -r requirements.txt`
-3.  Navigate to the `notebooks` directory and run the `bank_churn_predictive_model.ipynb` Jupyter Notebook.
+**Data Dictionary:** [View Dictionary](./data/Bank_Churn_Data_Dictionary.csv)
 
-## Tools & Libraries
-* Python
-* Pandas
-* Scikit-learn
-* Imbalanced-learn
-* Matplotlib & Seaborn
+- **Class Imbalance:** Applied SMOTE (Synthetic Minority Over-sampling Technique) to train the model on a balanced dataset, preventing bias towards the majority "Stay" class.
+- **Feature Engineering:** Created interaction terms like `Germany_X_Balance` to capture specific regional risk profiles that baseline models missed.
+
+### 2. Hyperparameter Optimization
+
+**Methodology:**
+
+- Utilized `GridSearchCV` and `RandomizedSearchCV` to fine-tune the Gradient Boosting classifier.
+- Prioritized **Recall** over Accuracy to ensure we cast a wide enough net to catch potential churners, accepting a manageable false-positive rate.
+
+### 3. Strategic Threshold Tuning
+
+**Outcome:**
+
+- Calibrated the decision threshold to **0.45**.
+- This specific tuning maximized the identification of actual churners (74% Recall) while maintaining precision actionable for business retention teams.
+
+---
+
+## Strategic Recommendations
+
+### Ecosystem Deepening
+
+**Target:** Low-product accounts (1 product).
+**Action:** Offer pre-approved credit cards or savings bundles to increase "stickiness" and integration depth.
+
+### Automated Activity Nudges
+
+**Target:** Inactive members with high balances.
+**Action:** Trigger proactive engagement emails or app notifications to re-activate dormant relationships.
+
+### Specialized German Retention Desk
+
+**Target:** German customers with high account balances.
+**Action:** Deploy a specialized support team trained to address competitive deposit rates, as this specific segment showed high sensitivity to balance levels.
+
+---
+
+## Technical Implementation
+
+### Repository Structure
+
+- **`data/`**: Contains raw and processed datasets (`Bank_Churn_Messy.xlsx`, `Bank_Churn_Enhanced_Features.csv`).
+- **`notebook/`**: Jupyter Notebooks with full analysis code (`bank_churn_predictive_model.ipynb`).
+- **`images/`**: Visualizations and model performance charts.
+
+### Setup Instructions
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/michaelcampbell215/bank-churn-predictive-repo.git
+    ```
+2.  **Install dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+3.  **Run the analysis:**
+    - Navigate to `notebook/` and open `bank_churn_predictive_model.ipynb` in Jupyter Lab or VS Code.
+    - Execute cells to reproduce the data cleaning, SMOTE application, and model training.
+
+---
+
+## Contact
+
+**Questions on this Analysis?**
+[Email](mailto:mcam215@gmail.com) | [LinkedIn](https://linkedin.com/in/michaelcampbellanalyst) | [GitHub](https://github.com/michaelcampbell215)
